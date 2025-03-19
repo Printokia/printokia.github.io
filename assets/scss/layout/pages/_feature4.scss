@@ -1,0 +1,199 @@
+@use "../../utils" as *;
+
+/*----------------------------------------*/
+/* 8.1 feature4
+/*----------------------------------------*/
+.feature4{
+    &__item{
+        background: rgba(212, 78, 73, 0.06);
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 30px 50px;
+        border-radius: 4px;
+        @media #{$xxs} {
+            flex-wrap: wrap;
+        }
+        img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .title{
+            font-family: var(--rr-ff-heading);
+            color: var(--rr-heading-primary);
+            font-style: normal;
+            font-weight: 500;
+            font-size: 24px;
+            line-height: 34px;
+            margin-bottom: 0;
+            @media #{$xxs} {
+                font-size: 20px;
+            }
+        }
+    }
+}
+
+// feature 5
+.feature-first-bg{
+    background: linear-gradient(180deg, #0268AE 0%, #012B48 100%);
+    border-radius: 10px;
+}
+.feature-5-card{
+    padding: 55px 55px 55px 30px;
+    border-radius: 10px;
+}
+.feature-5-content{
+
+    & p{
+        font-family: var(--rr-ff-heading);
+        color: var(--rr-common-white);
+        font-weight: var(--rr-fw-regular);
+        font-style: normal;
+        font-size: 16px;
+        line-height: 36px;
+        margin-bottom: 0;
+        @media #{$mxs} {
+            font-size: 15px;
+        }
+    }
+
+    
+
+    & h3{
+        color: #FFFFFF;
+        font-weight: 600;
+        z-index: 2;
+        position: relative;
+    }
+
+    & h5{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 46px;
+    color: #FFFFFF;
+    align-items: center;
+
+    & span{
+        color: #FF8B17;
+        font-weight: 600;
+        padding-left: 4px;
+    }        
+    }
+
+    .des{
+        color: #D44E49;
+    }
+
+    .feature-5-title{
+        color: #001D08;
+    }
+
+    .feature-5-sub{
+        color: #001D08;
+    }
+    .feature-btn{
+        background: var(--rr-common-white);
+        font-family: var(--rr-ff-heading);
+        color: var(--rr-heading-primary);
+        font-weight: var(--rr-fw-medium);
+        font-style: normal;
+        font-size: 16px;
+        line-height: 46px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 2px 35px;
+        border-radius: 4px;
+        transition: all 0.3s ease-in-out;
+        position: relative;
+        z-index: 2;
+        i{
+            font-weight: var(--rr-fw-sbold);
+        }
+        &:hover{
+            background: var(--rr-theme-secondary);
+            color: var(--rr-common-white);
+        }
+    }
+}
+.feature-5-right-img {
+    position: absolute;
+    top: -70px;
+    right: 58px;
+    z-index: 1;
+    @media #{$xs} {
+		position: inherit;
+        width: 350px;
+	}
+    @media #{$xxs} {
+        top: 0;
+        right: 5px;
+        width: 320px;
+	}
+    @media #{$mxm} {
+        top: 0;
+        right: 55px;
+        width: 300px;
+	}
+    @media #{$mxs} {
+        top: 0;
+        right: 55px;
+        width: 300px;
+	}
+    &-2{
+        right: -24px;
+        top: inherit;
+        bottom: 15px;
+        z-index: 3;
+        @media #{$xs} {
+            right: -55px;
+            width: 230px;
+            top: 30px;
+        }
+        @media #{$xxs} {
+            right: -55px;
+            width: 230px;
+            top: 30px;
+        }
+        @media #{$mxm} {
+            right: 0;
+            width: 230px;
+            top: 30px;
+        }
+        @media #{$mxs} {
+            right: 0;
+            width: 230px;
+            top: 30px;
+        }
+    }
+}
+.feature-5-shape-sec img {
+    z-index: 2;
+    right: -132px;
+    top: 27px;
+    height: auto;
+    width: 395px;
+} 
+.shape-1 {
+    left: -107px;
+    top: -67px;
+    z-index: 1;
+    width: 303px;
+    height: 301px;
+}
+.shape-2 {
+    right: -35px;
+    top: 116px;
+    z-index: 1;
+    width: 377px;
+    height: 263px;
+    @media #{$md, $sm, $xs} {
+		right: -10px;
+	}
+    @media #{$xs} {
+		display: none;
+	}
+}

@@ -1,0 +1,29 @@
+@use '../../utils' as *;
+
+/*----------------------------------------*/
+/*  5.1 blog
+/*----------------------------------------*/
+.latest-blog__area{
+    .bottom-button{
+        gap: 10px;
+        justify-content: center;
+        a{
+            color: var(--rr-heading-primary);
+            background: #F5F5F5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            transition: .3s;
+
+            &:hover{
+                background: var(--rr-theme-primary);
+                color: var(--rr-common-white);
+            }
+        }
+    }
+}
+// blog 4
+

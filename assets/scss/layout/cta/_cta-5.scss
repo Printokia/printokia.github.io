@@ -1,0 +1,48 @@
+@use '../../utils' as *;
+
+// cta 5
+a.cta-5__btn {
+    background: var(--rr-heading-primary);
+    font-family: var(--rr-ff-heading);
+    color: var(--rr-common-white);
+    font-weight: var(--rr-fw-medium);
+    font-size: 16px;
+    line-height: 30px;
+    padding: 15px 29px;
+    border-radius: 4px;
+
+    &:hover {
+        background-color: var(--rr-theme-secondary);
+    }
+}
+
+.cta-5__title {
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 62px;
+    color: #001D08;
+    @media #{$xs} {
+            font-size: 35px;
+            line-height: 50px;
+        }
+
+    & br {
+        @media #{$xs} {
+            display: none;
+        }
+    }
+}
+
+.cta-5__shape-1 {
+    left: 0;
+    top: 0;
+}
+
+.cta-5__shape-2 {
+    right: 140px;
+    top: 33px;
+
+    @media #{$xl} {
+        right: 50px;
+    }
+}

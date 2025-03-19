@@ -1,0 +1,468 @@
+@use '../../utils' as *;
+
+/**----------------------------------------
+START: Slider CSS
+----------------------------------------*/
+/* Fade Effect */
+.pixfix-fadeIn {
+    animation-name: asFadeIn;
+}
+
+@keyframes asFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.pixfix-fadeInLeft {
+    animation-name: asFadeInLeft;
+}
+
+@keyframes asFadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.pixfix-fadeInRight {
+    animation-name: asFadeInRight;
+}
+
+
+
+@keyframes asFadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.pixfix-fadeInDown {
+    animation-name: asFadeInTop;
+}
+
+@keyframes asFadeInTop {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.pixfix-fadeInUp {
+    animation-name: asFadeInBottom;
+}
+
+@keyframes asFadeInBottom {
+    from {
+        opacity: 0;
+        z-index: -2;
+        transform: translateY(50px);
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+
+/* Image Effect */
+.pixfix-img-effect {
+    animation-name: imgEffect;
+}
+
+@keyframes imgEffect {
+    from {
+        opacity: 0;
+        transform: translatex(50%) scalex(2);
+        filter: blur(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translatex(0) scalex(1);
+        filter: blur(0);
+    }
+}
+
+/* Move From Effect */
+.pixfix-moveFromLeft {
+    animation-name: asMoveFromLeft;
+}
+
+@keyframes asMoveFromLeft {
+    from {
+        visibility: hidden;
+        transform: translateX(-50px);
+    }
+
+    to {
+        visibility: visible;
+    }
+}
+
+.pixfix-moveFromRight {
+    animation-name: asMoveFromRight;
+}
+
+@keyframes asMoveFromRight {
+    from {
+        visibility: hidden;
+        transform: translateX(50px);
+    }
+
+    to {
+        visibility: visible;
+    }
+}
+
+.pixfix-moveFromTop {
+    animation-name: asMoveFromTop;
+}
+
+@keyframes asMoveFromTop {
+    from {
+        visibility: hidden;
+        transform: translateY(-50px);
+    }
+
+    to {
+        visibility: visible;
+    }
+}
+
+.pixfix-moveFromBottom {
+    animation-name: asMoveFromBottom;
+}
+
+@keyframes asMoveFromBottom {
+    from {
+        visibility: hidden;
+        transform: translateY(50px);
+    }
+
+    to {
+        visibility: visible;
+    }
+}
+
+/* Blur Effect */
+
+.pixfix-blurIn {
+    animation-name: asBlurIn;
+}
+
+@keyframes asBlurIn {
+    from {
+        filter: blur(20px);
+        opacity: 0;
+    }
+}
+
+.pixfix-blurInLeft {
+    animation-name: asBlurInLeft;
+}
+
+@keyframes asBlurInLeft {
+    from {
+        transform: translateX(50px);
+        filter: blur(20px);
+        opacity: 0;
+    }
+}
+
+.pixfix-blurInRight {
+    animation-name: asBlurInRight;
+}
+
+@keyframes asBlurInRight {
+    from {
+        transform: translateX(-50px);
+        filter: blur(20px);
+        opacity: 0;
+    }
+}
+
+.pixfix-blurInTop {
+    animation-name: asBlurInTop;
+}
+
+@keyframes asBlurInTop {
+    from {
+        transform: translateY(50px);
+        filter: blur(20px);
+        opacity: 0;
+    }
+}
+
+.pixfix-blurInBottom {
+    animation-name: asBlurInBottom;
+}
+
+@keyframes asBlurInBottom {
+    from {
+        transform: translateY(-50px);
+        filter: blur(20px);
+        opacity: 0;
+    }
+}
+
+/* Zoom Effect */
+.pixfix-zoomIn {
+    animation-name: asZoomIn;
+}
+
+@keyframes asZoomIn {
+    from {
+        opacity: 0;
+        transform: scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.pixfix-zoomInLeft {
+    animation-name: asZoomInLeft;
+}
+
+@keyframes asZoomInLeft {
+    from {
+        transform: scale(5) translateX(-50%);
+        opacity: 0;
+    }
+}
+
+.pixfix-zoomInRight {
+    animation-name: asZoomInRight;
+}
+
+@keyframes asZoomInRight {
+    from {
+        transform: scale(5) translateX(50%);
+        opacity: 0;
+    }
+}
+
+.pixfix-zoomInTop {
+    animation-name: asZoomInTop;
+}
+
+@keyframes asZoomInTop {
+    from {
+        transform: scale(10) translateY(-50%);
+        opacity: 0;
+    }
+}
+
+.pixfix-zoomInBottom {
+    animation-name: asZoomInBottom;
+}
+
+@keyframes asZoomInBottom {
+    from {
+        transform: scale(10) translateY(50%);
+        opacity: 0;
+    }
+}
+
+/* Flip Effect */
+.pixfix-flipInTop {
+    animation-name: asFlipInTop;
+}
+
+@keyframes asFlipInTop {
+    from {
+        transform: perspective(600px);
+        opacity: 0;
+    }
+
+    30% {
+        transform: perspective(600px) rotateX(180deg);
+        transform-origin: 0 0;
+        animation-timing-function: ease-out;
+    }
+
+    to {
+        transform: perspective(600px);
+    }
+}
+
+.pixfix-flipInBottom {
+    animation-name: asFlipInBottom;
+}
+
+@keyframes asFlipInBottom {
+    from {
+        transform: perspective(600px);
+        opacity: 0;
+    }
+
+    30% {
+        transform: perspective(600px) rotateX(180deg);
+        transform-origin: bottom;
+        animation-timing-function: ease-out;
+    }
+
+    to {
+        transform: perspective(600px);
+    }
+}
+
+/* Roll Effect */
+.pixfix-rollFromLeft {
+    animation-name: asRollFromLeft;
+}
+
+@keyframes asRollFromLeft {
+    from {
+        transform: translateX(-60px) perspective(600px) rotateY(180deg);
+        opacity: 0;
+    }
+}
+
+.pixfix-rollFromRight {
+    animation-name: asRollFromRight;
+}
+
+@keyframes asRollFromRight {
+    from {
+        transform: translateX(60px) perspective(600px) rotateY(-180deg);
+        opacity: 0;
+    }
+}
+
+.pixfix-rollFromTop {
+    animation-name: asRollFromTop;
+}
+
+@keyframes asRollFromTop {
+    from {
+        transform: translateY(-60px) perspective(600px) rotateX(180deg);
+        opacity: 0;
+    }
+}
+
+.pixfix-rollFromBottom {
+    animation-name: asRollFromBottom;
+}
+
+@keyframes asRollFromBottom {
+    from {
+        transform: translateY(60px) perspective(600px) rotateX(-180deg);
+        opacity: 0;
+    }
+}
+
+/* Rotate Skate Effect */
+.pixfix-rotateSkateInRight {
+    animation-name: asRotateSkateInRight;
+}
+
+@keyframes asRotateSkateInRight {
+    from {
+        transform: scaleX(0.2) translateX(100px);
+        opacity: 0;
+    }
+}
+
+.pixfix-rotateSkateInLeft {
+    animation-name: asRotateSkateInLeft;
+}
+
+@keyframes asRotateSkateInLeft {
+    from {
+        transform: scaleX(0.2) translateX(-100px);
+        opacity: 0;
+    }
+}
+
+.pixfix-rotateSkateInTop {
+    animation-name: asRotateSkateInTop;
+}
+
+@keyframes asRotateSkateInTop {
+    from {
+        transform: scaleY(0.2) translateY(-100px);
+        opacity: 0;
+    }
+}
+
+.pixfix-rotateSkateInBottom {
+    animation-name: asRotateSkateInBottom;
+}
+
+@keyframes asRotateSkateInBottom {
+    from {
+        transform: scaleY(0.2) translateY(100px);
+        opacity: 0;
+    }
+}
+
+/* PopUp Effect */
+.pixfix-popUp {
+    animation-name: asPopUp;
+}
+
+@keyframes asPopUp {
+    0% {
+        visibility: hidden;
+    }
+
+    50% {
+        transform: scale(1.1);
+        visibility: visible;
+    }
+}
+
+.pixfix-popUpLeft {
+    animation-name: asPopUpLeft;
+}
+
+@keyframes asPopUpLeft {
+    0% {
+        visibility: hidden;
+    }
+
+    50% {
+        visibility: visible;
+        transform: translateX(-20px) scale(1.1);
+        animation-timing-function: ease-in;
+    }
+}
+
+.pixfix-popUpRight {
+    animation-name: asPopUpRight;
+}
+
+@keyframes asPopUpRight {
+    0% {
+        visibility: hidden;
+    }
+
+    50% {
+        visibility: visible;
+        transform: translateX(20px) scale(1.1);
+        animation-timing-function: ease-in;
+    }
+}
+
+/* !END:  Slider CSS */

@@ -1,0 +1,133 @@
+@use '../../utils' as *;
+
+/*----------------------------------------*/
+/*  8.1 brand4
+/*----------------------------------------*/
+
+//brand 5
+.rrbrand__border {
+    border: 1px dashed rgba(0, 29, 8, 0.1);
+    padding: 35px 0px;
+}
+.rrbrand__wrapper-text{
+    & h5{
+        align-items: center;
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 34px;
+        Color: #001D08;
+    }
+}
+.custom-row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.rrbrand__item{
+        border-right: 1px dashed rgba(0, 29, 8, 0.1);
+        padding: 30px 54px; padding: 30px 54px;
+        align-items: center;
+        display: flex;
+        height: 80px;
+        
+}
+.rr-brand-5__border{
+    border: 1px dashed rgba(0, 29, 8, 0.3);
+}
+.rr-brand-5__item-box{
+    padding: 45px 30px;
+    border-right: 1px dashed rgba(0, 29, 8, 0.3);
+    margin: 30px 0;
+    gap: 20px;
+    height: 80px;
+    margin-right: -1px;
+    @media #{$xs } {
+        border-right: none;
+        border-bottom: 1px dashed rgba(0, 29, 8, 0.3);
+        padding: 60px 30px;
+        margin: 0;
+        margin-bottom: -1px;
+    }
+}
+.rr-brand-3__text{
+    & h5{
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 34px;
+        Color: #001D08;
+    }
+}
+
+// tp-brand
+.tp-slider-text-2 {
+    &__bg{
+        background: var(--rr-theme-secondary);
+        height: 70px;
+        line-height: 70px;
+        transform: rotate(-4.13deg);
+        @media #{$xs}{
+            transform: rotate(0deg);
+        }
+    }
+    &__text{
+        & span {
+            font-family: var(--rr-ff-heading);
+            color: var(--rr-common-white);
+            text-transform: uppercase;
+            font-size: 24px;
+            @media #{$xxl}{
+                font-size: 20px;
+            }
+            @media #{$xxl, $xl}{
+                font-size: 18px;
+            }
+            @media #{$lg, $md, $sm, $xs}{
+                font-size: 17px;
+            }
+        }
+        & svg {
+            margin-left: 31px;
+            line-height: 0;
+            transform: translateY(-3px);
+            @media #{$xs}{
+                width: 14px;
+            }   
+        }
+    }
+    &__gradiant-bg{
+        background: linear-gradient(90.33deg, #FF4D8D 49.71%, #9C42EB 82%, #4D81FB 100.53%);
+        height: 60px;
+        line-height: 60px;
+        transform: rotate(-6.13deg);
+        @media #{$xs}{
+            height: 60px;
+            line-height: 60px;
+            transform: rotate(0deg);
+        } 
+        & .tp-slider-text-2__text{
+            & span {
+                color: var(--tp-common-white);
+                @media #{$xxl}{
+                    font-size: 20px;
+                }
+                @media #{$xxl}{
+                    font-size: 18px;
+                }
+            }
+            & svg {
+                margin-left: 31px;
+                line-height: 0;
+                transform: translateY(-3px);
+            }
+        }
+    }
+}
+.tp-slider-text-2-active {
+    & .slick-slide {
+        margin: 0 25px;
+    }
+}

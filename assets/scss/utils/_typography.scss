@@ -1,0 +1,55 @@
+
+// font url
+$font-url: '@import url(https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&family=Rubik:wght@300;400;500;600;700;800&family=Sofia&display=swap)';
+
+// font family
+$font-family: (
+    ff: (
+        "body": "'Rubik', sans-serif",
+        "heading": "'Poppins', sans-serif",
+        "subtitle": "'Sofia'",
+        "fontawesome": '"Font Awesome 6 Pro"',
+    )
+);
+
+// font weight
+$font-scale: (
+    fw: (
+        "normal": normal,
+        "thin": 100,
+        "elight": 200,
+        "light": 300,
+        "regular": 400,
+        "medium": 500,
+        "sbold": 600,
+        "bold": 700,
+        "ebold": 800,
+        "black": 900,
+    )
+);
+
+// font size
+$font-size: (
+    fs: (
+        "body": 16px,
+        "body2": 18px,
+        "p": 16px,
+        "h1": 68px,
+        "h2": 48px,
+        "h3": 36px,
+        "h4": 24px,
+        "h5": 22px,
+        "h6": 18px,
+    ),
+    lh: (
+    "body": 28px,
+    "body2": 26px,
+    "p": 26px,
+    "h1": 84px,
+    "h2": 66px,
+    "h3": 46px,
+    "h4": 28px,
+    "h5": 32px,
+    "h6": 28px,
+    )
+);

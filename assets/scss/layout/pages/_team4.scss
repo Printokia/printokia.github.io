@@ -1,0 +1,83 @@
+@use '../../utils' as *;
+
+/*----------------------------------------*/
+/*  8.11 team 4
+/*----------------------------------------*/
+.latest-team-4 {
+    &__item {
+        &__text {
+            & span {
+                font-size: 20px;
+                color: #646464;
+            }
+        }
+
+        &__thumb {
+            overflow: hidden;
+            border-radius: 10px;
+            & img{
+                transition: .3s;
+            }
+            &:hover {
+                & .latest-team-4__social {
+                    opacity: 1;
+                    visibility: visible;
+                    bottom: 30px;
+                }
+                & img{
+                    filter: grayscale(100%);
+                    transform: scale(1.2);
+                }
+            }
+        }
+    }
+
+    &__title {
+        font-size: 24px;
+        font-weight: 600;
+        color: #0A0E19;
+        line-height: 34px;
+        margin-bottom: 5px;
+
+        &:hover {
+            color: #D04D48;
+        }
+    }
+
+    &__social {
+        bottom: 0px;
+        left: 0;
+        right: 0;
+        margin: auto;
+        background: #fff;
+        max-width: 156px;
+        transition: .3s;
+        opacity: 0;
+        visibility: hidden;
+        padding: 3px 0 3px 0;
+
+        & a {
+            font-size: 14px;
+            color: #646464;
+            margin: 0 8px;
+            transition: .3s;
+
+            &:hover {
+                color: #001D08;
+            }
+        }
+    }
+}
+.triangle {
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 17px 8.5px 0 8.5px;
+    border-color: #fff transparent transparent transparent;
+    transform: rotate(0deg);
+    bottom: -10px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    margin: auto;
+}

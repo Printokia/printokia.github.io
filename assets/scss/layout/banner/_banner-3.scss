@@ -1,0 +1,538 @@
+@use '../../utils' as *;
+/*----------------------------------------*/
+/*  3.1 banner Style 1
+/*----------------------------------------*/
+
+// Banner style 3
+.banner-3 {
+    &.space {
+        padding: 110px 0 97px;
+        
+        @media #{$xl} {
+            padding: 52px 0 77px;
+        }
+        
+        @media #{$xl, $lg, $md, $sm} {
+            padding: 80px 0 90px;
+        }
+        
+        @media #{$xs} {
+            padding: 60px 0 70px;
+        }
+    }
+    
+    &__media {
+        z-index: 1;
+        padding-left: 119px;
+        position: relative;
+        
+        margin-bottom: -97px;
+        margin-right: -315px;
+        margin-top: -110px;
+        
+        @media #{$xxl} {
+            padding-left: 19px;
+            margin-right: -215px;
+        }
+        
+        @media #{$xl} {
+            margin-bottom: -79px;
+            margin-top: -90px;
+            padding-left: 0;
+            margin-right: -290px;
+        }
+        
+        @media #{$lg, $md, $sm, $xs} {
+            padding: 0;
+            margin:  50px 0 0;
+        }
+        
+        .img {
+            overflow: hidden;
+            padding-left: 288px;
+            z-index: -1;
+            position: absolute;
+            right: 0;
+            top: 0;
+            
+            @media #{$xxl} {
+                padding-left: 188px;
+            }
+            
+            @media #{$xl} {
+                padding-left: 60px;
+            }
+            
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+        
+        &__shape {
+            background-size: contain;
+            overflow:hidden;
+            background-repeat: no-repeat;
+            width: 936px;
+            height: 723px;
+            
+            @media #{$xl} {
+                width: 903px;
+                height: 723px;
+            }
+            
+            @media #{$lg, $md, $sm, $xs} {
+                display: none;
+            }
+        }
+        
+        .banner-image-mobile {
+            overflow: hidden;
+            @include border-radius(5px);
+        }
+    }
+    
+    &__content {
+        
+        h1 {
+            color: var(--rr-gray-900);
+            font-size: 60px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 116.667%;
+            
+            @media #{$xl} {
+                font-size: 52px;
+                line-height:72px;
+            }
+            @media #{$lg} {
+                font-size: 52px;
+                line-height:64px;
+            }
+            @media #{$md} {
+                font-size: 50px;
+                line-height:52px;
+            }
+            @media #{$sm} {
+                font-size: 38px;
+                line-height:50px;
+            }
+            @media #{$xs} {
+                font-size: 32px;
+                line-height:44px;
+            }
+            
+            span {
+                color: var(--rr-theme-primary);
+            }
+        }
+        
+        .rr-btn__wrapper {
+            gap: 10px;
+        }
+    }
+    
+    &__item {
+        gap: 15px;
+        padding: 23px 42px 19px 20px;
+        @include border-radius(5px);
+        border-left: 1px solid #000;
+        background: var(--rr-common-white);
+        box-shadow: 0px 10px 60px 0px rgba(0, 0, 0, 0.07);
+        
+        &-left {
+            img {
+                width: 54px;
+                height: 54px;
+                @include border-radius(500px);
+                border: 2px solid var(--rr-common-white);
+                
+                &:not(:first-child) {
+                    margin-left: -16px;
+                }
+            }
+            
+            span.custom-img {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 54px;
+                height: 54px;
+                margin-left:-16px;
+                background-color: var(--rr-common-white);
+                @include border-radius(500px);
+                border: 2px solid var(--rr-common-white);
+                filter: drop-shadow(0px 4px 13px rgba(19, 16, 34, 0.06)) drop-shadow(0px 4.8px 24.4px rgba(19, 16, 34, 0.10));
+                
+                i {
+                    font-size:32px;
+                    color: var(--rr-theme-primary);
+                }
+            }
+        }
+    }
+}
+
+.banner__space-3 {
+    padding-top: 325px;
+    padding-bottom: 190px;
+
+    @media #{$lg} {
+        padding-top: 280px;
+        padding-bottom: 213px;
+    }
+
+    @media #{$md} {
+        padding-top: 220px;
+        padding-bottom: 475px;
+    }
+    @media #{$sm} {
+        padding-top: 180px;
+        padding-bottom: 475px;
+    }
+    @media #{$xs} {
+        padding-top: 130px;
+        padding-bottom: 475px;
+    }
+
+    .bg-shape{
+        position: absolute;
+        top:279px;
+        left: 378px;
+        z-index: -1;
+
+        @media #{$lg} {
+            top: 275px;
+            left: 378px;
+        }
+        @media #{$md} {
+            top: 870px;
+            left: -130px;
+        }
+        @media #{$sm} {
+            top: 870px;
+            left: -130px;
+        }
+        @media #{$xs} {
+            top: 729px;
+            left: -200px;
+        }
+        @media #{$mxm} {
+            top: 729px;
+            left: -200px;
+        }
+        @media #{$mxs} {
+            top: 729px;
+            left: -200px;
+        }
+
+        img{
+            width: auto;
+        }
+    }
+}
+
+.banner__area{
+    .bg-color{
+        background: linear-gradient(90.22deg, rgba(219, 255, 0, 0.1) 0.19%, rgba(247, 255, 152, 0.1) 49.48%, rgba(219, 255, 0, 0.1) 99.8%);
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+    .banner-home__middel-shape-2{
+        position: absolute;
+		background: radial-gradient(50% 50% at 49.98% 50%, #FFF 0%, #DADADA 8%, #A1A1A1 22%, #707070 36%, #474747 50%, #282828 63%, #121212 77%, #040404 89%, #000 100%);
+		background-blend-mode: screen;
+		mix-blend-mode: screen;
+		width: 639.5px;
+		height: 639.5px;
+		border-radius: 500px;
+		top: -60px;
+        left: 556px;
+        z-index: -2;
+
+		@media #{$xxl} {
+			top: -200px;
+			left: 370px;
+		}
+
+		@media #{$xl} {
+			top: -200px;
+			left: 190px;
+		}
+
+		@media #{$lg} {
+			top: -200px;
+			left: 190px;
+		}
+
+		@media #{$md} {
+			top: -230px;
+			left: 100px;
+		}
+
+		@media #{$sm} {
+			top: -280px;
+			left: -80px;
+		}
+
+		@media #{$xs} {
+			top: -330px;
+			left: -80px;
+		}
+    }
+    .banner-custom-container{
+        .banner{
+            position: relative;
+            
+            .content-3{
+                margin-top: 0;
+                max-width: 597px;
+                margin-right: -59px;
+                .sub-title{
+                    color: var(--rr-theme-primary);
+                    font-family: var(--rr-ff-subtitle);
+                    font-weight: var(--rr-fw-regular);
+                    font-size: var(--rr-fs-h4);
+                    line-height: var(--rr-lh-h5);
+                    font-style: normal;
+                    margin-bottom: 12px;
+                }
+                .title{
+                    color: var(--rr-heading-primary);
+                    font-family: var(--rr-ff-heading);
+                    font-weight: var(--rr-fw-bold);
+                    font-style: normal;
+                    font-size: 64px;
+                    line-height: 86px;
+                    margin-bottom: 0;
+
+
+                    @media #{$xxl} {
+                        font-size: 59px;
+                        line-height: 86px;
+                    }
+                    @media #{$lg} {
+                        font-size: 62px;
+                        line-height: 86px;
+                    }
+        
+                    @media #{$md} {
+                        font-size: 62px;
+                        line-height: 86px;
+                    }
+        
+                    @media #{$sm} {
+                        font-size: 62px;
+                        line-height: 86px;
+                    }
+        
+                    @media #{$xs} {
+                        font-size: 45px;
+                        line-height: 70px;
+                    }
+                    @media #{$mxm} {
+                        font-size: 37px;
+                        line-height: 55px;
+                    }
+                    @media #{$mxs} {
+                        font-size: 31px;
+                        line-height: 48px;
+                    }
+                }
+            }
+            .banner-media-3{
+                .middel-img{
+                    position: relative;
+                    top: 18px;
+                    @media #{$lg} {
+                        top: 70px;
+                        right: 67px;
+                    }
+
+                    @media #{$md} {
+                        top: 282px;
+                        left: 60px;
+                    }
+                    @media #{$sm} {
+                        top: 282px;
+                    }
+                    @media #{$xs} {
+                        top: 300px;
+                        right: 16px;
+                    }
+                    @media #{$mxm} {
+                        top: 300px;
+                        right: 16px;
+                    }
+                    @media #{$mxs} {
+                        top: 300px;
+                        right: 16px;
+                    }
+
+                    .img-border{
+                        position: relative;
+                        z-index: 1;
+                        &:before{
+                            background-color: transparent;
+                            content: "";
+                            width: 100%;
+                            height: 100%;
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            border: 4px solid var(--rr-common-white);
+                            @include border-radius(10px);
+
+                            @media #{$mxs} {
+                                width: 81%;
+                            }
+                        }
+                    }
+
+                    .frist-img{
+                        position: absolute;
+                        top: -151px;
+                        left: 66px;
+                        transform: rotate(-20deg);
+                        width: 300px;
+                        @include border-radius(10px);
+                        height: 370px;
+                        overflow: hidden;
+
+                        @media #{$xs} {
+                            transform: rotate(-17deg);
+                        }
+                        @media #{$mxm} {
+                            left: 37px;
+                            transform: rotate(-9deg);
+                        }
+                        @media #{$mxs} {
+                            left: 40px;
+                            transform: rotate(-7deg);
+                            top: -111px;
+                        }
+
+                        img{
+                            width: 300px;
+                            height: 370px;
+                            object-fit: cover;
+                            border-radius: 11px;
+
+                            @media #{$mxs} {
+                                width: 240px;
+                            }
+                        
+                        }
+                    }
+                    .secend-img{
+                        left: 172px;
+                        position: absolute;
+                        width: 300px;
+                        transform: rotate(30deg);
+                        @include border-radius(10px);
+                        height: 370px;
+                        overflow: hidden;
+                        top: 138px;
+
+                        @media #{$xs} {
+                            transform: rotate(14deg);
+                            left: 63px;
+                        }
+                        @media #{$mxm} {
+                            transform: rotate(5deg);
+                            left: 36px;
+                        }
+
+                        @media #{$mxs} {
+                            transform: rotate(8deg);
+                            left: 38px;
+                        }
+
+                        img{
+                            width: 300px;
+                            height: 370px;
+                            object-fit: cover;
+                            border-radius: 11px;
+                            @media #{$mxs} {
+                                width: 243px;
+                            }
+                            
+                        }
+                    }
+                  
+                }
+            }
+            .banner-text{
+                .text-space{
+                    p{
+                        margin-bottom: 20px;
+                        max-width: 485px;
+                        font-family: var(--rr-ff-body);
+                        font-weight: var(--rr-fw-regular);
+                        line-height: var(--rr-lh-h5);
+                        color: var(--rr-text-body);
+                        font-style: normal;
+                        font-size: 20px;
+
+                        @media #{$xxl} {
+                            margin-top: -60px;
+                        }
+                    }
+                    .arrow{
+                        position: relative;
+                        left: 72px;
+                        margin-bottom: -74px;
+
+                        @media #{$lg} {
+                            left: 361px;
+                            margin-bottom: -150px;
+                        }
+                        @media #{$md} {
+                            left: 397px;
+                            top: -161px;
+                        }
+                        @media #{$sm} {
+                            left: 397px;
+                            top: -161px;
+                        }
+                        @media #{$xs} {
+                            left: 397px;
+                            top: -161px;
+                        }
+                        @media #{$mxm} {
+                            left: 397px;
+                            top: -161px;
+                        }
+
+                        img{
+                            width: auto;
+                            max-width: 410px;
+                            height: auto;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .banner__navigation-3{
+        position: absolute;
+        top: 90%;
+        left: 90%;
+
+        button{
+            background: transparent;
+            border: 1px solid #e3e8d2;
+            transition: .3s;
+
+            &:hover{
+                color: var(--rr-common-white);
+                background: var(--rr-theme-primary);
+            }
+        }
+    }
+}

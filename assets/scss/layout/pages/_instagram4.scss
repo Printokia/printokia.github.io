@@ -1,0 +1,26 @@
+@use '../../utils' as *;
+
+/*----------------------------------------*/
+/*  8.11 instagram 4
+/*----------------------------------------*/
+.rr-instagram-4{
+    &__thumb{
+        .overlay{
+            background: rgb(0 29 8 / 50%) !important;
+        }
+        .overlay-icon{
+            background: transparent;
+        }
+        .media{
+            img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+        &:hover {
+            & img {
+                transform: scale(1.04);
+            }
+        }
+    }
+}

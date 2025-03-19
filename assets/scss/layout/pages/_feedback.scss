@@ -1,0 +1,28 @@
+@use '../../utils' as *;
+
+/*----------------------------------------*/
+/*  8.3 feedback
+/*----------------------------------------*/
+.banner__area{
+    .banner__space-shape-wrapper{
+        .banner__space-shape-wrapper-top-black-shape{
+            position: absolute;
+            top: -10px;
+            left: 0;
+            img{
+                width: 100%;
+                height: auto;
+            }
+        }
+        .banner__space-shape-wrapper-bottom-shape{
+            position: absolute;
+            right: 0;
+            bottom: -15px;
+
+            img{
+                width: 100%;
+                height: auto;
+            }
+        }
+    }
+}
