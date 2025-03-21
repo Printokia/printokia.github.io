@@ -105,7 +105,7 @@
 		8.11 team-details
 		8.12 home1
 		8.13 home2
-		8.14 home3
+		8.14 home3  
 		8.15 index
  */
 /*----------------------------------------*/
@@ -113,7 +113,7 @@
 /*----------------------------------------*/
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&family=Rubik:wght@300;400;500;600;700;800&family=Sofia&display=swap");
 .banner-home-bg {
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0.19%, rgba(255, 255, 255, 0.014) 49.48%, rgba(255, 255, 255, 0.1) 99.8%);
+  background: linear-gradient(180deg, rgb(0 149 88 / 46%) 0.19%, rgb(119 255 0 / 10%) 49.48%, rgb(255 191 0 / 10%) 99.8%);
 }
 
 .latest-feature-bg {
@@ -233,7 +233,7 @@
   background-color: #F3ECEA;
 }
 
-.brand__thumb img, .mean-container .mean-nav ul li > a.mean-expand i, .main-menu ul li.has-dropdown > a::after, .main-menu ul li .submenu, .main-menu ul li .submenu li a::before, .main-menu ul li .mega-menu, .main-menu ul li .mega-menu li ul li a::before, .offcanvas__overlay, .offcanvas__navigation button svg, .rr-btn svg path, .rr-btn.btn-transparent.btn-border-gray i, .body__overlay, a,
+._thumb img, .mean-container .mean-nav ul li > a.mean-expand i, .main-menu ul li.has-dropdown > a::after, .main-menu ul li .submenu, .main-menu ul li .submenu li a::before, .main-menu ul li .mega-menu, .main-menu ul li .mega-menu li ul li a::before, .offcanvas__overlay, .offcanvas__navigation button svg, .rr-btn svg path, .rr-btn.btn-transparent.btn-border-gray i, .body__overlay, a,
 .btn,
 button,
 span,
@@ -1327,7 +1327,7 @@ textarea {
   padding: 10px 28px;
   color: var(--rr-heading-primary);
   background-color: transparent;
-  border: 1px solid rgba(0, 29, 8, 0.1);
+  border: 1px solid rgba(1, 231, 134, 1);
 }
 .rr-btn.btn-transparent::before {
   background-color: var(--rr-theme-primary);
