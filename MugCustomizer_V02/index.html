@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Custom Mug 3D Customization</title>
+
+    <!-- Tailwind dev CDN (ok for local dev) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- THREE.JS and examples -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/controls/OrbitControls.js"></script>
+
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="bg-gray-50 min-h-screen p-4 sm:p-8 font-sans">
+
+  <div class="max-w-7xl mx-auto bg-white rounded-xl shadow-2xl p-4 sm:p-8">
+
+    <!-- Header -->
+    <header class="flex justify-between items-center mb-6 border-b pb-4">
+      <h1 class="text-xl sm:text-2xl font-bold text-gray-800">Customized Photo Printed Coffee Mug Cup</h1>
+      <div class="flex items-center text-yellow-500">
+        <span class="text-sm sm:text-base mr-2">★★★★★</span>
+        <span class="text-gray-500 text-sm">(455)</span>
+      </div>
+    </header>
+
+    <!-- Main Customization Area -->
+    <div class="flex flex-col lg:flex-row gap-6">
+
+      <!-- Left Panel: Editor + 3D overlay (UI A layout) -->
+      <div class="lg:w-3/5 space-y-4">
+        <div id="editor-viewer-wrapper" class="relative rounded-xl overflow-hidden shadow-xl border border-gray-200">
+
+          <!-- Texture Editor Panel -->
+          <div id="texture-editor-panel" class="absolute inset-0 bg-white p-4 flex flex-col justify-between">
+            <div>
+              <h2 class="font-semibold mb-2 text-gray-700">Texture Editor (Draw on UV Map)</h2>
+              <canvas id="texture-editor" width="700" height="350" class="w-full h-auto max-w-full border border-gray-300 rounded-lg"></canvas>
+            </div>
+
+            <!-- Tools & Apply/View -->
+            <div id="interaction-buttons" class="flex justify-between items-center mt-4">
+              <div class="flex space-x-3 text-gray-600 items-center">
+                <button id="tool-pen" class="p-2 bg-gray-100 hover:bg-gray-200 rounded-full" title="Pen">✏️</button>
+                <button id="tool-eraser" class="p-2 bg-gray-100 hover:bg-gray-200 rounded-full" title="Eraser">🧽</button>
+                <label class="p-2 bg-gray-100 hover:bg-gray-200 rounded-full cursor-pointer" title="Upload Image">
+                  <input id="img-upload" type="file" accept="image/*" class="hidden" />
+                  🖼
+                </label>
+                <button id="btn-clear" class="p-2 bg-gray-100 hover:bg-gray-200 rounded-full" title="Clear">♻️</button>
+              </div>
+
+              <div class="flex items-center space-x-3">
+                <div class="flex items-center mr-3">
+                  <input id="brush-size" type="range" min="1" max="80" value="15" class="mr-2" />
+                  <input id="brush-color" type="color" value="#2563eb" class="w-10 h-8 p-0 border-0"/>
+                </div>
+
+                <button id="view-3d-btn" class="px-4 py-2 bg-gray-600 text-white rounded-full hover:bg-gray-700 disabled:opacity-50" disabled>
+                  <span class="hidden sm:inline">View</span> 3D Preview
+                </button>
+                <button id="apply-texture-btn" class="px-4 py-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 disabled:opacity-50" disabled>
+                  Apply Design
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3D Viewer Overlay (hidden until toggled) -->
+          <div id="mug-viewer-3d-overlay" class="absolute inset-0 bg-gray-100 rounded-xl transition-all duration-300 opacity-0 hidden">
+            <div id="three-container" class="w-full h-full relative"></div>
+
+            <div id="loading-spinner" class="absolute inset-0 flex justify-center items-center bg-gray-200/80 z-20">
+              <div class="spinner"></div>
+              <span class="ml-3 text-gray-700">3D मॉडल तैयार हो रहा है... (Preparing 3D Model...)</span>
+            </div>
+
+            <button id="close-3d-viewer" class="absolute top-3 right-3 p-2 bg-white rounded-full shadow-lg z-30 text-gray-800 hover:bg-gray-200 transition">
+              ✕
+            </button>
+          </div>
+
+        </div>
+
+        <p class="text-sm text-gray-500 mt-4">This is a ceramic coffee mug with HD photo print.</p>
+
+        <!-- Trust badges -->
+        <div class="flex justify-around items-center text-center text-sm text-gray-600 mt-4 border-t pt-4">
+          <div class="flex flex-col items-center">
+            <span class="text-indigo-600 text-xl">₹</span>
+            <p>10% Cashback</p>
+          </div>
+          <div class="flex flex-col items-center">
+            <span class="text-indigo-600 text-xl">📦</span>
+            <p>10K+ Orders</p>
+          </div>
+          <div class="flex flex-col items-center">
+            <span class="text-indigo-600 text-xl">🔄</span>
+            <p>7 Days Replacement</p>
+          </div>
+          <div class="flex flex-col items-center">
+            <span class="text-indigo-600 text-xl">📞</span>
+            <p>Contact Us</p>
+          </div>
+        </div>
+        <p class="text-sm text-center text-green-600 font-medium">Express delivery by 27 October – 29 October</p>
+      </div>
+
+      <!-- Right Panel: Options & Cart (unchanged style) -->
+      <div class="lg:w-2/5 space-y-6">
+        <section>
+          <h2 class="font-bold text-lg mb-3 text-gray-700">Mug Type</h2>
+          <div id="mug-type-options" class="flex space-x-3">
+            <div class="option-tile selected">
+              <img src="assets/images/mug-basic.png" alt="Basic Mug" class="h-10 w-10">
+              <span class="text-xs mt-1">Basic</span>
+            </div>
+            <div class="option-tile">
+              <img src="assets/images/mug-magic.png" alt="Magic Mug" class="h-10 w-10">
+              <span class="text-xs mt-1">Magic</span>
+            </div>
+            <div class="option-tile">
+              <img src="assets/images/mug-dual.png" alt="Dual Mug" class="h-10 w-10">
+              <span class="text-xs mt-1">Dual</span>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="font-bold text-lg mb-3 text-gray-700">Mug Color (for handle/trim)</h2>
+          <div id="mug-color-options" class="flex space-x-3">
+            <button data-color="#ff0000" class="w-8 h-8 rounded-full bg-red-600 ring-2 ring-offset-2 ring-red-600 transition"></button>
+            <button data-color="#10b981" class="w-8 h-8 rounded-full bg-green-500 hover:ring-2 hover:ring-offset-2 hover:ring-green-500 transition"></button>
+            <button data-color="#3b82f6" class="w-8 h-8 rounded-full bg-blue-500 hover:ring-2 hover:ring-offset-2 hover:ring-blue-500 transition"></button>
+            <button data-color="#facc15" class="w-8 h-8 rounded-full bg-yellow-400 hover:ring-2 hover:ring-offset-2 hover:ring-yellow-400 transition"></button>
+          </div>
+        </section>
+
+        <section class="bg-gray-50 p-4 rounded-xl border border-gray-200">
+          <h2 class="text-lg font-semibold mb-3 text-indigo-600">Shop more, Save more!</h2>
+          <table class="w-full text-sm text-left text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+              <tr>
+                <th scope="col" class="px-3 py-2">Qty:</th>
+                <th scope="col" class="px-3 py-2 text-center">1-5</th>
+                <th scope="col" class="px-3 py-2 text-center">6-10</th>
+                <th scope="col" class="px-3 py-2 text-center">11-20</th>
+                <th scope="col" class="px-3 py-2 text-center">21 +</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="bg-white border-b">
+                <td class="px-3 py-2 font-medium text-gray-900">Price:</td>
+                <td class="px-3 py-2 text-center">₹219</td>
+                <td class="px-3 py-2 text-center text-green-600 font-semibold">₹215</td>
+                <td class="px-3 py-2 text-center">₹210</td>
+                <td class="px-3 py-2 text-center">₹200</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <div class="flex items-center justify-between border-t pt-4">
+          <div class="flex flex-col">
+            <span class="text-xl text-gray-500 line-through mr-3">₹438</span>
+            <div class="flex items-baseline">
+              <span class="text-xs font-semibold text-red-500 mr-2">50% OFF</span>
+              <span class="text-3xl font-extrabold text-gray-900">₹219</span>
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-3">
+            <div class="flex border border-gray-300 rounded-lg">
+              <button class="px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-l-lg">-</button>
+              <input type="text" value="1" class="w-10 text-center border-x border-gray-300 focus:outline-none" readonly>
+              <button class="px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-r-lg">+</button>
+            </div>
+            <button class="px-8 py-3 bg-orange-500 text-white font-bold text-lg rounded-xl hover:bg-orange-600 transition shadow-xl shadow-orange-200">
+              Add to cart
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast root -->
+  <div id="toast-root" class="fixed top-6 right-6 z-50"></div>
+
+  <script src="js/customizer.js"></script>
+</body>
+</html>

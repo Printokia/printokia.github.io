@@ -1,0 +1,48 @@
+/* style.css */
+#texture-editor {
+  background-image:
+    linear-gradient(to right, #e5e5e5 1px, transparent 1px),
+    linear-gradient(to bottom, #e5e5e5 1px, transparent 1px);
+  background-size: 25px 25px;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.option-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: .5rem;
+  border: 2px solid #e5e7eb;
+  border-radius: .5rem;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+.option-tile:hover { border-color: #6366f1; }
+.option-tile.selected { border-color: #6366f1; box-shadow: 0 0 0 4px rgba(99,102,241,0.12); }
+
+#editor-viewer-wrapper { height: 28rem; }
+
+/* spinner */
+.spinner {
+  border: 4px solid rgba(0,0,0,0.08);
+  border-left-color: #4f46e5;
+  border-radius: 9999px;
+  width: 34px;
+  height: 34px;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* toast */
+.toast {
+  background: rgba(17,24,39,0.95);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(2,6,23,0.18);
+  font-size: 14px;
+  margin-top: 8px;
+  transition: opacity .25s ease;
+}
