@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Mug 3D Customization</title>
+    <!-- Load Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Three.js (No separate GLTFLoader required anymore as we use built-in geometry) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom styles for the 2D editor canvas */
+        #texture-editor {
+            /* Ensure the 2D canvas handles drawing */
+            background-image: linear-gradient(to right, #e5e5e5 1px, transparent 1px), linear-gradient(to bottom, #e5e5e5 1px, transparent 1px);
+            background-size: 25px 25px; 
+            cursor: crosshair;
+        }
+
+        .option-tile {
+            @apply flex flex-col items-center justify-center p-2 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-indigo-500 transition-all;
+        }
+
+        .option-tile.selected {
+            @apply border-indigo-500 ring-2 ring-indigo-500;
+        }
+
+        /* Set a consistent height for the container where the editor and viewer overlap */
+        #editor-viewer-wrapper {
+            height: 28rem; 
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #4f46e5;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen p-4 sm:p-8 font-sans">
+
+    <div class="max-w-7xl mx-auto bg-white rounded-xl shadow-2xl p-4 sm:p-8">
+
+        <!-- Header -->
+        <header class="flex justify-between items-center mb-6 border-b pb-4">
+            <h1 class="text-xl sm:text-2xl font-bold text-gray-800">Customized Photo Printed Coffee Mug Cup</h1>
+            <div class="flex items-center text-yellow-500">
+                <span class="text-sm sm:text-base mr-2">★★★★★</span>
+                <span class="text-gray-500 text-sm">(455)</span>
+            </div>
+        </header>
+
+        <!-- Main Customization Area (Responsive Layout) -->
+        <div class="flex flex-col lg:flex-row gap-6">
+
+            <!-- Left Panel: Combined Editor and 3D Viewer -->
+            <div class="lg:w-3/5 space-y-4">
+                
+                <!-- Combined Editor/Viewer Container -->
+                <div id="editor-viewer-wrapper" class="relative rounded-xl overflow-hidden shadow-xl border border-gray-200">
+
+                    <!-- 1. Texture Editor Panel (Bottom Layer) -->
+                    <div id="texture-editor-panel" class="absolute inset-0 bg-white p-4 flex flex-col justify-between">
+                        <div>
+                            <h2 class="font-semibold mb-2 text-gray-700">Texture Editor (Draw on UV Map)</h2>
+                            <canvas id="texture-editor" width="700" height="350" class="w-full h-auto max-w-full border border-gray-300 rounded-lg"></canvas>
+                        </div>
+                        
+                        <!-- Editor Tools & Apply/View 3D Buttons -->
+                        <div id="interaction-buttons" class="flex justify-between items-center mt-4">
+                            <!-- Tool Icons (placeholders) -->
+                            <div class="flex space-x-3 text-gray-600">
+                                <button class="p-2 bg-gray-100 hover:bg-gray-200 rounded-full transition" title="Add Text"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M5.5 13a3.5 3.5 0 01-3.5-3.5v-2a3.5 3.5 0 117 0v2c0 1.577-.662 3-2 3zM10 8a2 2 0 012-2h4a2 2 0 012 2v2a2 2 0 01-2 2h-4a2 2 0 01-2-2V8z" /></svg></button>
+                                <button class="p-2 bg-gray-100 hover:bg-gray-200 rounded-full transition" title="Add Image"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" /></svg></button>
+                                <button class="p-2 bg-gray-100 hover:bg-gray-200 rounded-full transition" title="Pen/Draw"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zm-3.182 4.907L8.414 7.218 5 10.632V14h3.368l3.414-3.414 1.414-1.414z" /></svg></button>
+                            </div>
+
+                            <div class="flex space-x-3">
+                                <!-- Buttons are initially disabled but will be enabled immediately after a local mesh is created -->
+                                <button id="view-3d-btn" class="px-4 py-2 bg-gray-600 text-white font-semibold rounded-full hover:bg-gray-700 transition shadow-lg text-sm disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                    <span class="hidden sm:inline">View</span> 3D Preview
+                                </button>
+                                <button id="apply-texture-btn" class="px-4 py-2 bg-indigo-600 text-white font-semibold rounded-full hover:bg-indigo-700 transition shadow-lg text-sm disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                    Apply Design
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. 3D Viewer Overlay (Top Layer) -->
+                    <div id="mug-viewer-3d-overlay" class="absolute inset-0 bg-gray-100 rounded-xl transition-all duration-300 opacity-0 hidden">
+                        <!-- Three.js will render here -->
+                        <div id="three-container" class="w-full h-full relative">
+                            <!-- Loading message, which will be hidden quickly -->
+                            <div id="loading-spinner" class="absolute inset-0 flex justify-center items-center bg-gray-200/80 z-20">
+                                <div class="spinner"></div>
+                                <span class="ml-3 text-gray-700">3D मॉडल तैयार हो रहा है... (Preparing 3D Model...)</span>
+                            </div>
+                        </div>
+
+                        <!-- Close Button -->
+                        <button id="close-3d-viewer" class="absolute top-3 right-3 p-2 bg-white rounded-full shadow-lg z-10 text-gray-800 hover:bg-gray-200 transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <p class="text-sm text-gray-500 mt-4">This is a ceramic coffee mug with HD photo print.</p>
+                
+                <!-- Trust Badges -->
+                <div class="flex justify-around items-center text-center text-sm text-gray-600 mt-4 border-t pt-4">
+                    <div class="flex flex-col items-center">
+                        <span class="text-indigo-600 text-xl">₹</span>
+                        <p>10% Cashback</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span class="text-indigo-600 text-xl">📦</span>
+                        <p>10K+ Orders</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span class="text-indigo-600 text-xl">🔄</span>
+                        <p>7 Days Replacement</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span class="text-indigo-600 text-xl">📞</span>
+                        <p>Contact Us</p>
+                    </div>
+                </div>
+                <p class="text-sm text-center text-green-600 font-medium">Express delivery by 27 October – 29 October</p>
+            </div>
+
+            <!-- Right Panel: Options, Price, and Cart (Remains unchanged) -->
+            <div class="lg:w-2/5 space-y-6">
+                
+                <section>
+                    <h2 class="font-bold text-lg mb-3 text-gray-700">Mug Type</h2>
+                    <div id="mug-type-options" class="flex space-x-3">
+                        <div class="option-tile selected">
+                            <img src="https://placehold.co/40x40/f3f4f6/333?text=B" alt="Basic Mug" class="h-10 w-10">
+                            <span class="text-xs mt-1">Basic</span>
+                        </div>
+                        <div class="option-tile">
+                            <img src="https://placehold.co/40x40/f3f4f6/333?text=M" alt="Magic Mug" class="h-10 w-10">
+                            <span class="text-xs mt-1">Magic</span>
+                        </div>
+                        <div class="option-tile">
+                            <img src="https://placehold.co/40x40/f3f4f6/333?text=D" alt="Dual Mug" class="h-10 w-10">
+                            <span class="text-xs mt-1">Dual</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="font-bold text-lg mb-3 text-gray-700">Mug Color (for handle/trim)</h2>
+                    <div id="mug-color-options" class="flex space-x-3">
+                        <button data-color="#ff0000" class="w-8 h-8 rounded-full bg-red-600 ring-2 ring-offset-2 ring-red-600 transition"></button>
+                        <button data-color="#10b981" class="w-8 h-8 rounded-full bg-green-500 hover:ring-2 hover:ring-offset-2 hover:ring-green-500 transition"></button>
+                        <button data-color="#3b82f6" class="w-8 h-8 rounded-full bg-blue-500 hover:ring-2 hover:ring-offset-2 hover:ring-blue-500 transition"></button>
+                        <button data-color="#facc15" class="w-8 h-8 rounded-full bg-yellow-400 hover:ring-2 hover:ring-offset-2 hover:ring-yellow-400 transition"></button>
+                    </div>
+                </section>
+
+                <section class="bg-gray-50 p-4 rounded-xl border border-gray-200">
+                    <h2 class="text-lg font-semibold mb-3 text-indigo-600">Shop more, Save more!</h2>
+                    <table class="w-full text-sm text-left text-gray-500">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+                            <tr>
+                                <th scope="col" class="px-3 py-2">Qty:</th>
+                                <th scope="col" class="px-3 py-2 text-center">1-5</th>
+                                <th scope="col" class="px-3 py-2 text-center">6-10</th>
+                                <th scope="col" class="px-3 py-2 text-center">11-20</th>
+                                <th scope="col" class="px-3 py-2 text-center">21 +</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="bg-white border-b">
+                                <td class="px-3 py-2 font-medium text-gray-900">Price:</td>
+                                <td class="px-3 py-2 text-center">₹219</td>
+                                <td class="px-3 py-2 text-center text-green-600 font-semibold">₹215</td>
+                                <td class="px-3 py-2 text-center">₹210</td>
+                                <td class="px-3 py-2 text-center">₹200</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- Price and Add to Cart -->
+                <div class="flex items-center justify-between border-t pt-4">
+                    <div class="flex flex-col">
+                        <span class="text-xl text-gray-500 line-through mr-3">₹438</span>
+                        <div class="flex items-baseline">
+                            <span class="text-xs font-semibold text-red-500 mr-2">50% OFF</span>
+                            <span class="text-3xl font-extrabold text-gray-900">₹219</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3">
+                        <!-- Quantity selector (placeholder) -->
+                        <div class="flex border border-gray-300 rounded-lg">
+                            <button class="px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-l-lg">-</button>
+                            <input type="text" value="1" class="w-10 text-center border-x border-gray-300 focus:outline-none" readonly>
+                            <button class="px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-r-lg">+</button>
+                        </div>
+                        <button class="px-8 py-3 bg-orange-500 text-white font-bold text-lg rounded-xl hover:bg-orange-600 transition shadow-xl shadow-orange-200">
+                            Add to cart
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Three.js and 2D Canvas Editor -->
+    <script>
+        // --- GLOBAL VARIABLES ---
+        let scene, camera, renderer, mugGroup, mugMesh;
+        const threeContainer = document.getElementById('three-container');
+        const viewerOverlay = document.getElementById('mug-viewer-3d-overlay');
+        const loadingSpinner = document.getElementById('loading-spinner');
+        
+        // References to interaction buttons
+        const view3dBtn = document.getElementById('view-3d-btn');
+        const applyTextureBtn = document.getElementById('apply-texture-btn');
+
+        // --- THREE.JS SETUP (3D Viewer) ---
+        function initThree() {
+            // Scene setup
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xf3f4f6); // Gray-100 background
+
+            // Camera setup
+            const width = threeContainer.clientWidth;
+            const height = threeContainer.clientHeight;
+            camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000); 
+            camera.position.z = 2.5; // Moved back slightly
+
+            // Renderer setup
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(width, height);
+            threeContainer.appendChild(renderer.domElement);
+
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
+            scene.add(ambientLight);
+
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(1, 5, 2);
+            scene.add(directionalLight);
+            
+            // -------------------
+            // FIX: Use built-in THREE.js primitives instead of external GLB files
+            // Create a simple Cylinder to represent the mug
+            // -------------------
+            
+            // 1. Create a group to hold the mug components
+            mugGroup = new THREE.Group();
+
+            // 2. Create the main body (Cylinder)
+            // top radius, bottom radius, height, radial segments, height segments
+            const cylinderGeometry = new THREE.CylinderGeometry(0.7, 0.8, 1.5, 64, 1); 
+            const baseMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0xffffff, // White color base for texture mapping
+                side: THREE.DoubleSide 
+            });
+            mugMesh = new THREE.Mesh(cylinderGeometry, baseMaterial);
+            mugMesh.rotation.x = Math.PI * 0.5; // Lay it flat like a UV map unwrapping preview (optional)
+            mugMesh.position.y = 0.5; // Lift it up slightly
+            
+            // 3. Create a Handle (simplified Torus)
+            const handleGeometry = new THREE.TorusGeometry(0.5, 0.1, 16, 100);
+            const handleMaterial = new THREE.MeshPhongMaterial({ color: 0xcccccc }); // Grey handle
+            const handleMesh = new THREE.Mesh(handleGeometry, handleMaterial);
+            
+            handleMesh.rotation.y = Math.PI * 0.5; // Rotate to face side
+            handleMesh.position.set(-1, 0.5, 0); // Position next to the cylinder
+
+            // Add components to the group
+            mugGroup.add(mugMesh);
+            mugGroup.add(handleMesh);
+            
+            mugGroup.scale.set(1.5, 1.5, 1.5); // Overall scale
+            mugGroup.position.set(0, 0, 0); 
+            scene.add(mugGroup);
+
+            // Hide the spinner since loading is instant now
+            loadingSpinner.classList.add('hidden'); 
+            
+            // ENABLE BUTTONS IMMEDIATELY
+            view3dBtn.disabled = false;
+            applyTextureBtn.disabled = false;
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Rotate the entire loaded group
+            if (mugGroup) {
+                mugGroup.rotation.y += 0.005;
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        // Handle window resize and container resize
+        function onWindowResize() {
+            if (!renderer || !camera || !threeContainer) return;
+            
+            const width = threeContainer.clientWidth;
+            const height = threeContainer.clientHeight;
+            
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height);
+        }
+        
+        const resizeObserver = new ResizeObserver(entries => {
+            for (let entry of entries) {
+                if (entry.target === threeContainer) {
+                    onWindowResize();
+                }
+            }
+        });
+        resizeObserver.observe(threeContainer);
+
+
+        // --- 2D CANVAS EDITOR SETUP ---
+        const editorCanvas = document.getElementById('texture-editor');
+        const ctx = editorCanvas.getContext('2d');
+        let isDrawing = false;
+
+        function initEditor() {
+            ctx.fillStyle = '#fefefe';
+            ctx.fillRect(0, 0, editorCanvas.width, editorCanvas.height);
+            
+            // DRAWING CONFIG
+            ctx.lineWidth = 15; // Increased line width for better visibility
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = '#2563eb'; // Blue color
+
+            // Add text to guide the user
+            ctx.font = '24px Inter, sans-serif';
+            ctx.fillStyle = '#9ca3af';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('Draw Your Design Here (UV Map)', editorCanvas.width / 2, editorCanvas.height / 2);
+            
+            // Drawing Event Handlers
+            function getCanvasPos(e) {
+                const rect = editorCanvas.getBoundingClientRect();
+                const scaleX = editorCanvas.width / rect.width;
+                const scaleY = editorCanvas.height / rect.height;
+                // Correctly handle mouse and touch inputs
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                return {
+                    x: (clientX - rect.left) * scaleX,
+                    y: (clientY - rect.top) * scaleY
+                };
+            }
+
+            const startDrawing = (e) => {
+                e.preventDefault();
+                isDrawing = true;
+                const pos = getCanvasPos(e);
+                ctx.beginPath();
+                ctx.moveTo(pos.x, pos.y);
+            };
+
+            const draw = (e) => {
+                if (!isDrawing) return;
+                e.preventDefault();
+                const pos = getCanvasPos(e);
+                ctx.lineTo(pos.x, pos.y);
+                ctx.stroke();
+            };
+
+            const stopDrawing = () => {
+                isDrawing = false;
+                ctx.closePath(); // Ensure path is closed on stop
+            };
+
+            // Mouse Events
+            editorCanvas.addEventListener('mousedown', startDrawing);
+            editorCanvas.addEventListener('mousemove', draw);
+            editorCanvas.addEventListener('mouseup', stopDrawing);
+            editorCanvas.addEventListener('mouseout', stopDrawing);
+            
+            // Touch Events (Needed for mobile/touchscreens)
+            editorCanvas.addEventListener('touchstart', startDrawing);
+            editorCanvas.addEventListener('touchmove', draw);
+            editorCanvas.addEventListener('touchend', stopDrawing);
+            editorCanvas.addEventListener('touchcancel', stopDrawing);
+        }
+
+        // --- SYNCHRONIZATION LOGIC (The UV Mapping part) ---
+
+        function updateMugTexture() {
+            if (!mugMesh) {
+                console.error("3D model mesh not ready to receive texture.");
+                const messageDiv = document.createElement('div');
+                messageDiv.textContent = 'त्रुटि: मॉडल का टेक्सचर एरिया नहीं मिला। (Error: Texture area not found on model.)';
+                messageDiv.className = 'fixed top-4 right-4 bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 transition-opacity duration-300';
+                document.body.appendChild(messageDiv);
+                setTimeout(() => {
+                    messageDiv.style.opacity = '0';
+                    messageDiv.addEventListener('transitionend', () => messageDiv.remove());
+                }, 4000);
+                return;
+            }
+
+            // 1. Create a new texture from the 2D canvas content
+            const texture = new THREE.CanvasTexture(editorCanvas);
+            texture.needsUpdate = true;
+
+            // 2. Apply the canvas texture to the map property of the mesh material.
+            mugMesh.material.map = texture;
+            mugMesh.material.color.set(0xffffff); // Set color to white so texture colors show correctly
+            mugMesh.material.needsUpdate = true;
+            
+            // Show a success message
+            const messageDiv = document.createElement('div');
+            messageDiv.textContent = 'Design applied! Viewing 3D model.';
+            messageDiv.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 transition-opacity duration-300';
+            document.body.appendChild(messageDiv);
+            setTimeout(() => {
+                messageDiv.style.opacity = '0';
+                messageDiv.addEventListener('transitionend', () => messageDiv.remove());
+            }, 2000);
+        }
+
+        // --- OVERLAY TOGGLE LOGIC ---
+
+        function show3DViewer() {
+            viewerOverlay.classList.remove('hidden');
+            setTimeout(() => {
+                viewerOverlay.classList.remove('opacity-0');
+                // Ensure Three.js resizes immediately when shown
+                onWindowResize();
+            }, 10); 
+        }
+
+        function hide3DViewer() {
+            viewerOverlay.classList.add('opacity-0');
+            setTimeout(() => {
+                viewerOverlay.classList.add('hidden');
+            }, 300); 
+        }
+
+        // --- INTERACTION HANDLERS ---
+        
+        document.getElementById('view-3d-btn').addEventListener('click', show3DViewer);
+        document.getElementById('close-3d-viewer').addEventListener('click', hide3DViewer);
+
+        document.getElementById('apply-texture-btn').addEventListener('click', () => {
+            updateMugTexture();
+            show3DViewer(); // Show the 3D viewer immediately after applying
+        });
+
+        document.getElementById('mug-color-options').addEventListener('click', (e) => {
+            const button = e.target.closest('button');
+            if (button && button.dataset.color) {
+                const colorHex = button.dataset.color;
+
+                document.querySelectorAll('#mug-color-options button').forEach(btn => {
+                    btn.classList.remove('ring-2', 'ring-offset-2');
+                });
+                button.classList.add('ring-2', 'ring-offset-2');
+
+                console.log(`Color selected: ${colorHex}`);
+            }
+        });
+
+        // --- INITIALIZATION ON WINDOW LOAD ---
+        window.onload = function() {
+            initThree();
+            initEditor();
+            animate(); 
+        };
+
+    </script>
+</body>
+</html>
